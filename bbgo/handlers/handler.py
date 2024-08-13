@@ -1,7 +1,7 @@
 from ..data import Event
 
 
-class Handler(object):
+class Handler:
 
     def __call__(self, event: Event) -> None:
         self.handle(event)

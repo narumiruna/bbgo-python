@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from typing import Iterator
-from typing import List
 
 from loguru import logger
 
@@ -20,7 +19,7 @@ from .enums import SideType
 from .utils import get_insecure_channel
 
 
-class UserDataService(object):
+class UserDataService:
     stub: bbgo_pb2_grpc.UserDataServiceStub
 
     def __init__(self, host: str, port: int) -> None:
@@ -34,32 +33,31 @@ class UserDataService(object):
             yield UserDataEvent.from_pb(response)
 
 
-class MarketService(object):
+class MarketService:
     stub: bbgo_pb2_grpc.MarketDataServiceStub
 
     def __init__(self, host: str, port: int) -> None:
         self.stub = bbgo_pb2_grpc.MarketDataServiceStub(get_insecure_channel(host, port))
 
-    def subscribe(self, subscriptions: List[Subscription]) -> Iterator[MarketDataEvent]:
+    def subscribe(self, subscriptions: list[Subscription]) -> Iterator[MarketDataEvent]:
         request = bbgo_pb2.SubscribeRequest(subscriptions=[s.to_pb() for s in subscriptions])
         response_iter = self.stub.Subscribe(request)
 
         for response in response_iter:
             yield MarketDataEvent.from_pb(response)
 
-    def query_klines(self,
-                     exchange: str,
-                     symbol: str,
-                     limit: int = 30,
-                     interval: str = '1m',
-                     start_time: int = None,
-                     end_time: int = None) -> List[KLine]:
-        request = bbgo_pb2.QueryKLinesRequest(exchange=exchange,
-                                              symbol=symbol,
-                                              limit=limit,
-                                              interval=interval,
-                                              start_time=start_time,
-                                              end_time=end_time)
+    def query_klines(
+        self,
+        exchange: str,
+        symbol: str,
+        limit: int = 30,
+        interval: str = "1m",
+        start_time: int = None,
+        end_time: int = None,
+    ) -> list[KLine]:
+        request = bbgo_pb2.QueryKLinesRequest(
+            exchange=exchange, symbol=symbol, limit=limit, interval=interval, start_time=start_time, end_time=end_time
+        )
 
         response = self.stub.QueryKLines(request)
 
@@ -74,33 +72,37 @@ class MarketService(object):
         return klines
 
 
-class TradingService(object):
+class TradingService:
     stub: bbgo_pb2_grpc.TradingServiceStub
 
     def __init__(self, host: str, port: int) -> None:
         self.stub = bbgo_pb2_grpc.TradingServiceStub(get_insecure_channel(host, port))
 
-    def submit_order(self,
-                     session: str,
-                     exchange: str,
-                     symbol: str,
-                     side: str,
-                     quantity: float,
-                     order_type: str,
-                     price: float = None,
-                     stop_price: float = None,
-                     client_order_id: str = None,
-                     group_id: int = None) -> Order:
-        submit_order = SubmitOrder(session=session,
-                                   exchange=exchange,
-                                   symbol=symbol,
-                                   side=SideType.from_str(side),
-                                   quantity=quantity,
-                                   order_type=OrderType.from_str(order_type),
-                                   price=price,
-                                   stop_price=stop_price,
-                                   client_order_id=client_order_id,
-                                   group_id=group_id)
+    def submit_order(
+        self,
+        session: str,
+        exchange: str,
+        symbol: str,
+        side: str,
+        quantity: float,
+        order_type: str,
+        price: float = None,
+        stop_price: float = None,
+        client_order_id: str = None,
+        group_id: int = None,
+    ) -> Order:
+        submit_order = SubmitOrder(
+            session=session,
+            exchange=exchange,
+            symbol=symbol,
+            side=SideType.from_str(side),
+            quantity=quantity,
+            order_type=OrderType.from_str(order_type),
+            price=price,
+            stop_price=stop_price,
+            client_order_id=client_order_id,
+            group_id=group_id,
+        )
 
         request = bbgo_pb2.SubmitOrderRequest(session=session, submit_orders=[submit_order.to_pb()])
         response = self.stub.SubmitOrder(request)
@@ -132,48 +134,55 @@ class TradingService(object):
         response = self.stub.QueryOrder(request)
         return response
 
-    def query_orders(self,
-                     exchange: str,
-                     symbol: str,
-                     states: List[str] = None,
-                     order_by: str = 'asc',
-                     group_id: int = None,
-                     pagination: bool = True,
-                     page: int = 0,
-                     limit: int = 100,
-                     offset: int = 0) -> bbgo_pb2.QueryOrdersResponse:
+    def query_orders(
+        self,
+        exchange: str,
+        symbol: str,
+        states: list[str] = None,
+        order_by: str = "asc",
+        group_id: int = None,
+        pagination: bool = True,
+        page: int = 0,
+        limit: int = 100,
+        offset: int = 0,
+    ) -> bbgo_pb2.QueryOrdersResponse:
         # set default value to ['wait', 'convert']
-        states = states or ['wait', 'convert']
-        request = bbgo_pb2.QueryOrdersRequest(exchange=exchange,
-                                              symbol=symbol,
-                                              states=states,
-                                              order_by=order_by,
-                                              group_id=group_id,
-                                              pagination=pagination,
-                                              page=page,
-                                              limit=limit,
-                                              offset=offset)
+        states = states or ["wait", "convert"]
+        request = bbgo_pb2.QueryOrdersRequest(
+            exchange=exchange,
+            symbol=symbol,
+            states=states,
+            order_by=order_by,
+            group_id=group_id,
+            pagination=pagination,
+            page=page,
+            limit=limit,
+            offset=offset,
+        )
 
         reponse = self.stub.QueryOrders(request)
         return reponse
 
-    def query_trades(self,
-                     exchange: str,
-                     symbol: str,
-                     timestamp: int,
-                     order_by: str = 'asc',
-                     pagination: bool = True,
-                     page: int = 1,
-                     limit: int = 100,
-                     offset: int = 0) -> bbgo_pb2.QueryTradesResponse:
-
-        request = bbgo_pb2.QueryTradesRequest(exchange=exchange,
-                                              symbol=symbol,
-                                              timestamp=timestamp,
-                                              order_by=order_by,
-                                              pagination=pagination,
-                                              page=page,
-                                              limit=limit,
-                                              offset=offset)
+    def query_trades(
+        self,
+        exchange: str,
+        symbol: str,
+        timestamp: int,
+        order_by: str = "asc",
+        pagination: bool = True,
+        page: int = 1,
+        limit: int = 100,
+        offset: int = 0,
+    ) -> bbgo_pb2.QueryTradesResponse:
+        request = bbgo_pb2.QueryTradesRequest(
+            exchange=exchange,
+            symbol=symbol,
+            timestamp=timestamp,
+            order_by=order_by,
+            pagination=pagination,
+            page=page,
+            limit=limit,
+            offset=offset,
+        )
         response = self.stub.QueryTrades(request)
         return response

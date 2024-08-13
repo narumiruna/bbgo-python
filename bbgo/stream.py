@@ -15,7 +15,7 @@ from .data import Subscription
 from .data import UserDataEvent
 
 
-class Stream(object):
+class Stream:
     subscriptions: List[Subscription]
 
     def __init__(self, host: str, port: int):
@@ -49,7 +49,7 @@ class Stream(object):
 
     @property
     def address(self):
-        return f'{self.host}:{self.port}'
+        return f"{self.host}:{self.port}"
 
     async def _subscribe_market_data(self):
         async with grpc.aio.insecure_channel(self.address) as channel:
