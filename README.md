@@ -1,4 +1,4 @@
-# pybbgo
+# bbgo-python
 
 ## Installation
 
