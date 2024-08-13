@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import datetime
-from typing import List
 
 import bbgo_pb2
 
@@ -28,9 +27,9 @@ class Event:
 
 @dataclass
 class UserDataEvent(Event):
-    balances: List[Balance] = None
-    trades: List[Trade] = None
-    orders: List[Order] = None
+    balances: list[Balance] = None
+    trades: list[Trade] = None
+    orders: list[Order] = None
 
     @classmethod
     def from_pb(cls, obj: bbgo_pb2.UserData) -> UserDataEvent:
@@ -53,7 +52,7 @@ class MarketDataEvent(Event):
     depth: Depth = None
     kline: KLine = None
     ticker: Ticker = None
-    trades: List[Trade] = None
+    trades: list[Trade] = None
 
     @classmethod
     def from_pb(cls, obj: bbgo_pb2.MarketData) -> MarketDataEvent:

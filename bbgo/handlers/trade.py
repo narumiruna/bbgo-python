@@ -10,7 +10,7 @@ class TradeHandler(Handler):
         if event.channel_type != ChannelType.TRADE:
             return
 
-        super(TradeHandler, self).__call__(event)
+        super().__call__(event)
 
 
 class TradeSnapshotHandler(TradeHandler):
@@ -19,7 +19,7 @@ class TradeSnapshotHandler(TradeHandler):
         if event.event_type != EventType.SNAPSHOT:
             return
 
-        super(TradeSnapshotHandler, self).__call__(event)
+        super().__call__(event)
 
 
 class TradeUpdateHandler(TradeHandler):
@@ -28,4 +28,4 @@ class TradeUpdateHandler(TradeHandler):
         if event.event_type != EventType.UPDATE:
             return
 
-        super(TradeUpdateHandler, self).__call__(event)
+        super().__call__(event)

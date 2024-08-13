@@ -10,7 +10,7 @@ class KLineHandler(Handler):
         if event.channel_type != ChannelType.KLINE:
             return
 
-        super(KLineHandler, self).__call__(event)
+        super().__call__(event)
 
 
 class KLineSnapshotHandler(KLineHandler):
@@ -19,7 +19,7 @@ class KLineSnapshotHandler(KLineHandler):
         if event.event_type != EventType.SNAPSHOT:
             return
 
-        super(KLineSnapshotHandler, self).__call__(event)
+        super().__call__(event)
 
 
 class KLineUpdateHandler(KLineHandler):
@@ -28,4 +28,4 @@ class KLineUpdateHandler(KLineHandler):
         if event.event_type != EventType.UPDATE:
             return
 
-        super(KLineUpdateHandler, self).__call__(event)
+        super().__call__(event)

@@ -10,7 +10,7 @@ class TickerHandler(Handler):
         if event.channel_type != ChannelType.TICKER:
             return
 
-        super(TickerHandler, self).__call__(event)
+        super().__call__(event)
 
 
 class TickerSnapshotHandler(TickerHandler):
@@ -19,7 +19,7 @@ class TickerSnapshotHandler(TickerHandler):
         if event.event_type != EventType.SNAPSHOT:
             return
 
-        super(TickerSnapshotHandler, self).__call__(event)
+        super().__call__(event)
 
 
 class TickerUpdateHandler(TickerHandler):
@@ -28,4 +28,4 @@ class TickerUpdateHandler(TickerHandler):
         if event.event_type != EventType.UPDATE:
             return
 
-        super(TickerUpdateHandler, self).__call__(event)
+        super().__call__(event)

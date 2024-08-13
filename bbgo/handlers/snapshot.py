@@ -9,4 +9,4 @@ class SnapshotHandler(Handler):
         if event.event_type != EventType.SNAPSHOT:
             return
 
-        super(SnapshotHandler, self).__call__(event)
+        super().__call__(event)

@@ -10,7 +10,7 @@ class OrderHandler(Handler):
         if event.channel_type != ChannelType.ORDER:
             return
 
-        super(OrderHandler, self).__call__(event)
+        super().__call__(event)
 
 
 class OrderSnapshotHandler(OrderHandler):
@@ -19,7 +19,7 @@ class OrderSnapshotHandler(OrderHandler):
         if event.event_type != EventType.SNAPSHOT:
             return
 
-        super(OrderSnapshotHandler, self).__call__(event)
+        super().__call__(event)
 
 
 class OrderUpdateHandler(OrderHandler):
@@ -28,4 +28,4 @@ class OrderUpdateHandler(OrderHandler):
         if event.event_type != EventType.UPDATE:
             return
 
-        super(OrderUpdateHandler, self).__call__(event)
+        super().__call__(event)

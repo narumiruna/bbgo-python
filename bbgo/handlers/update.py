@@ -9,4 +9,4 @@ class UpdateHandler(Handler):
         if event.event_type != EventType.UPDATE:
             return
 
-        super(UpdateHandler, self).__call__(event)
+        super().__call__(event)
