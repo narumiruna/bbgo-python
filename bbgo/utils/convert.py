@@ -3,12 +3,12 @@ from decimal import Decimal
 from typing import Union
 
 
-def parse_number(s: Union[str, float]) -> Decimal:
+def parse_number(s: Union[str, float] | None) -> Decimal:
     if s is None:
-        return 0
+        return Decimal(0)
 
     if s == "":
-        return 0
+        return Decimal(0)
 
     return Decimal(s)
 

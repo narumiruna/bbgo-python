@@ -15,12 +15,12 @@ class SubmitOrder:
     exchange: str
     symbol: str
     side: SideType
-    quantity: Decimal
+    quantity: Decimal | float | None
     order_type: OrderType
-    price: Decimal = None
-    stop_price: Decimal = None
-    client_order_id: str = None
-    group_id: int = None
+    price: Decimal | float | None = None
+    stop_price: Decimal | float | None = None
+    client_order_id: str | None = None
+    group_id: int | None = None
 
     def to_pb(self) -> bbgo_pb2.SubmitOrder:
         return bbgo_pb2.SubmitOrder(

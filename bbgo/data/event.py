@@ -27,9 +27,9 @@ class Event:
 
 @dataclass
 class UserDataEvent(Event):
-    balances: list[Balance] = None
-    trades: list[Trade] = None
-    orders: list[Order] = None
+    balances: list[Balance] | None = None
+    trades: list[Trade] | None = None
+    orders: list[Order] | None = None
 
     @classmethod
     def from_pb(cls, obj: bbgo_pb2.UserData) -> UserDataEvent:
@@ -49,10 +49,10 @@ class MarketDataEvent(Event):
     symbol: str
     subscribed_at: datetime
     error: ErrorMessage
-    depth: Depth = None
-    kline: KLine = None
-    ticker: Ticker = None
-    trades: list[Trade] = None
+    depth: Depth | None = None
+    kline: KLine | None = None
+    ticker: Ticker | None = None
+    trades: list[Trade] | None = None
 
     @classmethod
     def from_pb(cls, obj: bbgo_pb2.MarketData) -> MarketDataEvent:

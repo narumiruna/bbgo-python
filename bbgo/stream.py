@@ -17,6 +17,8 @@ from .data import UserDataEvent
 
 class Stream:
     subscriptions: List[Subscription]
+    sessions: List[str]
+    event_handlers: List[Callable]
 
     def __init__(self, host: str, port: int):
         self.host = host
@@ -26,7 +28,9 @@ class Stream:
         self.sessions = []
         self.event_handlers = []
 
-    def subscribe(self, exchange: str, channel: str, symbol: str, depth: str = None, interval: str = None):
+    def subscribe(
+        self, exchange: str, channel: str, symbol: str, depth: str | None = None, interval: str | None = None
+    ):
         subscription = Subscription(exchange=exchange, channel=ChannelType.from_str(channel), symbol=symbol)
 
         if depth is not None:

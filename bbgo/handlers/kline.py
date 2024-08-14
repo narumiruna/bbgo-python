@@ -5,8 +5,7 @@ from .handler import Handler
 
 
 class KLineHandler(Handler):
-
-    def __call__(self, event: MarketDataEvent) -> None:
+    def __call__(self, event: MarketDataEvent) -> None:  # type: ignore[override]
         if event.channel_type != ChannelType.KLINE:
             return
 
@@ -14,8 +13,7 @@ class KLineHandler(Handler):
 
 
 class KLineSnapshotHandler(KLineHandler):
-
-    def __call__(self, event: MarketDataEvent) -> None:
+    def __call__(self, event: MarketDataEvent) -> None:  # type: ignore[override]
         if event.event_type != EventType.SNAPSHOT:
             return
 
@@ -23,8 +21,7 @@ class KLineSnapshotHandler(KLineHandler):
 
 
 class KLineUpdateHandler(KLineHandler):
-
-    def __call__(self, event: MarketDataEvent) -> None:
+    def __call__(self, event: MarketDataEvent) -> None:  # type: ignore[override]
         if event.event_type != EventType.UPDATE:
             return
 

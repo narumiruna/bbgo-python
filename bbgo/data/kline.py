@@ -19,11 +19,11 @@ class KLine:
     low: Decimal
     close: Decimal
     volume: Decimal
-    session: str = None
-    start_time: datetime = None
-    end_time: datetime = None
-    quote_volume: Decimal = None
-    closed: bool = None
+    session: str | None = None
+    start_time: datetime | None = None
+    end_time: datetime | None = None
+    quote_volume: Decimal | None = None
+    closed: bool | None = None
 
     @classmethod
     def from_pb(cls, obj: bbgo_pb2.KLine) -> KLine:

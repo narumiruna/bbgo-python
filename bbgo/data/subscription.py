@@ -13,8 +13,8 @@ class Subscription:
     exchange: str
     channel: ChannelType
     symbol: str
-    depth: DepthType = None
-    interval: str = None
+    depth: DepthType | None = None
+    interval: str | None = None
 
     def to_pb(self) -> bbgo_pb2.Subscription:
         subscription_pb = bbgo_pb2.Subscription(

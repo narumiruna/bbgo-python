@@ -5,8 +5,7 @@ from .handler import Handler
 
 
 class OrderHandler(Handler):
-
-    def __call__(self, event: UserDataEvent) -> None:
+    def __call__(self, event: UserDataEvent) -> None:  # type: ignore[override]
         if event.channel_type != ChannelType.ORDER:
             return
 
@@ -14,8 +13,7 @@ class OrderHandler(Handler):
 
 
 class OrderSnapshotHandler(OrderHandler):
-
-    def __call__(self, event: UserDataEvent) -> None:
+    def __call__(self, event: UserDataEvent) -> None:  # type: ignore[override]
         if event.event_type != EventType.SNAPSHOT:
             return
 
@@ -23,8 +21,7 @@ class OrderSnapshotHandler(OrderHandler):
 
 
 class OrderUpdateHandler(OrderHandler):
-
-    def __call__(self, event: UserDataEvent) -> None:
+    def __call__(self, event: UserDataEvent) -> None:  # type: ignore[override]
         if event.event_type != EventType.UPDATE:
             return
 

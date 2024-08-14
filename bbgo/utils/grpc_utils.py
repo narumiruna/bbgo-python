@@ -4,17 +4,17 @@ import grpc
 
 
 def read_binary(f):
-    with open(f, 'rb') as fp:
+    with open(f, "rb") as fp:
         return fp.read()
 
 
 def get_grpc_cert_file_from_env():
-    cert_file = os.environ.get('BBGO_GRPC_CERT_FILE')
+    cert_file = os.environ.get("BBGO_GRPC_CERT_FILE")
     return cert_file
 
 
 def get_grpc_key_file_from_env():
-    key_file = os.environ.get('BBGO_GRPC_KEY_FILE')
+    key_file = os.environ.get("BBGO_GRPC_KEY_FILE")
     return key_file
 
 
@@ -30,13 +30,13 @@ def get_credentials_from_env():
 
 
 def get_insecure_channel(host: str, port: int) -> grpc.Channel:
-    address = f'{host}:{port}'
+    address = f"{host}:{port}"
     return grpc.insecure_channel(address)
 
 
 def get_insecure_channel_from_env() -> grpc.Channel:
-    host = os.environ.get('BBGO_GRPC_HOST') or '127.0.0.1'
-    port = os.environ.get('BBGO_GRPC_PORT') or 50051
+    host = os.environ.get("BBGO_GRPC_HOST") or "127.0.0.1"
+    port = int(os.environ.get("BBGO_GRPC_PORT") or 50051)
 
     address = get_insecure_channel(host, port)
 

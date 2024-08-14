@@ -5,7 +5,7 @@ from .handler import Handler
 
 
 class BookHandler(Handler):
-    def __call__(self, event: MarketDataEvent) -> None:
+    def __call__(self, event: MarketDataEvent) -> None:  # type: ignore[override]
         if event.channel_type != ChannelType.BOOK:
             return
 
@@ -13,7 +13,7 @@ class BookHandler(Handler):
 
 
 class BookSnapshotHandler(BookHandler):
-    def __call__(self, event: MarketDataEvent) -> None:
+    def __call__(self, event: MarketDataEvent) -> None:  # type: ignore[override]
         if event.event_type != EventType.SNAPSHOT:
             return
 
@@ -21,7 +21,7 @@ class BookSnapshotHandler(BookHandler):
 
 
 class BookUpdateHandler(BookHandler):
-    def __call__(self, event: MarketDataEvent) -> None:
+    def __call__(self, event: MarketDataEvent) -> None:  # type: ignore[override]
         if event.event_type != EventType.UPDATE:
             return
 

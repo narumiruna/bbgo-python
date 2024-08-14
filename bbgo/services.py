@@ -52,8 +52,8 @@ class MarketService:
         symbol: str,
         limit: int = 30,
         interval: str = "1m",
-        start_time: int = None,
-        end_time: int = None,
+        start_time: int | None = None,
+        end_time: int | None = None,
     ) -> list[KLine]:
         request = bbgo_pb2.QueryKLinesRequest(
             exchange=exchange, symbol=symbol, limit=limit, interval=interval, start_time=start_time, end_time=end_time
@@ -86,10 +86,10 @@ class TradingService:
         side: str,
         quantity: float,
         order_type: str,
-        price: float = None,
-        stop_price: float = None,
-        client_order_id: str = None,
-        group_id: int = None,
+        price: float | None = None,
+        stop_price: float | None = None,
+        client_order_id: str | None = None,
+        group_id: int | None = None,
     ) -> Order:
         submit_order = SubmitOrder(
             session=session,
@@ -114,7 +114,7 @@ class TradingService:
 
         return order
 
-    def cancel_order(self, session: str, order_id: int = None, client_order_id: int = None) -> Order:
+    def cancel_order(self, session: str, order_id: int | None = None, client_order_id: int | None = None) -> Order:
         request = bbgo_pb2.CancelOrderRequest(
             session=session,
             id=order_id or "",
@@ -129,7 +129,9 @@ class TradingService:
 
         return order
 
-    def query_order(self, order_id: int = None, client_order_id: int = None) -> bbgo_pb2.QueryOrderResponse:
+    def query_order(
+        self, order_id: int | None = None, client_order_id: int | None = None
+    ) -> bbgo_pb2.QueryOrderResponse:
         request = bbgo_pb2.QueryOrderRequest(id=order_id, client_order_id=client_order_id)
         response = self.stub.QueryOrder(request)
         return response
@@ -138,9 +140,9 @@ class TradingService:
         self,
         exchange: str,
         symbol: str,
-        states: list[str] = None,
+        states: list[str] | None = None,
         order_by: str = "asc",
-        group_id: int = None,
+        group_id: int | None = None,
         pagination: bool = True,
         page: int = 0,
         limit: int = 100,
